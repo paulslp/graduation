@@ -1,8 +1,8 @@
 ###1. Information about database and application
 
-| Database name     | Database type  | Application context|
-| :-------------    | :----------:   |:----------:   |
-| graduation        | HSQLDB         |graduation     |
+| Database name     | Database type  | Application context|URL after launch tomcat without cargo-maven-plugin|
+| :-------------    | :----------:   |:----------:        |:----------:                                      |
+| graduation        | HSQLDB         |/graduation          |http://localhost:8080/graduation/rest/all/welcome |
 
 ###2. Information about database structure and access to tables through services
 
