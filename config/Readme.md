@@ -1,10 +1,10 @@
-###1. Information about database and application
+### 1. Information about database and application
 
 | Database name     | Database type  | Application context|URL after launch tomcat without cargo-maven-plugin|
 | :-------------    | :----------:   |:----------:        |:----------:                                      |
 | graduation        | HSQLDB         |/graduation          |http://localhost:8080/graduation/rest/all/welcome |
 
-###2. Information about database structure and access to tables through services
+### 2. Information about database structure and access to tables through services
 
 | Table name     | Table type  | Field name list                              | Foreign key field names | Unique index field names         |Admin rights      | User rights                               |
 | :------------- | :----------:| -----------:                                 | -----------:            | -----------:                     | -----------:     |-----------:                               |
@@ -17,21 +17,23 @@
 
 The date_list table is needed to display reports (for example, displaying voting results for a period) and is filled in by the administrator using the sql-queries for database.
 
-###3.Service Information
-####3.1. Meal service
+### 3.Service Information
+#### 3.1. Meal service
+
 | Method name |Parameters   |Http request type| URL                             | Definition       |Admin rights|User rights |
 | :-----------| :----------:|:----------:     | :----------                     | :-----------     |:--------:  |:---------: |
-| getAll      |no parameters|       GET       | /rest/admin/meals               |Get all meals     |      +     |      -     |                                |
+| getAll      |no parameters|       GET       | /rest/admin/meals               |Get all meals     |      +     |      -     |                                
 | get         |id           |       GET       | /rest/admin/meals/{id}          |Get meal by id    |      +     |      -     |    
 | getByName   |name         |       GET       | /rest/admin/meals/by?name={name}|Get meal by name  |      +     |      -     |    
 | create      |meal         |       POST      | /rest/admin/meals               |Create new meal   |      +     |      -     |    
 | update      |meal,id      |       PUT       | /rest/admin/meals/{id}          |Update meal by id |      +     |      -     |    
 | delete      |id           |      DELETE     | /rest/admin/meals/{id}          |Delete meal by id |      +     |      -     |    
 
-####3.2. Restaurant service
+#### 3.2. Restaurant service
+
 | Method name                     |Parameters       |Http request type| URL                                                                | Definition                                                 |Admin rights|User rights |
 | :-----------                    | :----------:    |:----------:     | :----------                                                        | :-----------                                               |:--------:  |:---------: |
-| getAll                          |no parameters    |       GET       | /rest/restaurants/admin                                            |Get all restaurants                                         |      +     |      -     |                                |
+| getAll                          |no parameters    |       GET       | /rest/restaurants/admin                                            |Get all restaurants                                         |      +     |      -     |                                
 | get                             |id               |       GET       | /rest/restaurants/admin/{id}                                       |Get restaurant by id                                        |      +     |      -     |    
 | getByName                       |name             |       GET       | /rest/restaurants/admin/by/{name}                                  |Get restaurant by name                                      |      +     |      -     |    
 | create                          |restaurant       |       POST      | /rest/restaurants/admin                                            |Create new restaurant                                       |      +     |      -     |    
@@ -39,7 +41,8 @@ The date_list table is needed to display reports (for example, displaying voting
 | delete                          |id               |      DELETE     | /rest/restaurants/admin                                            |Delete restaurant by id                                     |      +     |      -     |
 | getRestaurantListWithMenuOnDate |startDate,endDate|       GET       | /rest/restaurants/user/list?startDate={startDate}&endDate={endDate}|Get a list of restaurants that have a menu for a given date |      +     |      +     |
 
-####3.3. User service
+#### 3.3. User service
+
 | Method name |Parameters   |Http request type| URL                               | Definition       |Admin rights|User rights |
 | :-----------| :----------:|:----------:     | :----------                       | :-----------     |:--------:  |:---------: |
 | getAll      |no parameters|       GET       | /rest/admin/users                 |Get all users     |      +     |      -     |                                |
@@ -51,17 +54,19 @@ The date_list table is needed to display reports (for example, displaying voting
 
 Anonymous users can register by /profile/register URL 
 
-####3.4. Menu service
+#### 3.4. Menu service
+
 | Method name             |Parameters                    |Http request type| URL                                                                                     | Definition                                           |Admin rights|User rights |
 | :-----------            | :----------:                 |:----------:     | :----------                                                                             | :-----------                                         |:--------:  |:---------: |
-| getBetween              |startDate,endDate             |       GET       | /rest/menu/admin/filter?startDate={startDate}&endDate={endDate}                         |Get a list of menus for a given period                |      +     |      -     |                                |
+| getBetween              |startDate,endDate             |       GET       | /rest/menu/admin/filter?startDate={startDate}&endDate={endDate}                         |Get a list of menus for a given period                |      +     |      -     |                                
 | get                     |id                            |       GET       | /rest/menu/admin/{id}                                                                   |Get menu by id                                        |      +     |      -     |       
 | create                  |menu                          |       POST      | /rest/menu/admin                                                                        |Create new menu                                       |      +     |      -     |    
 | update                  |menu,id                       |       PUT       | /rest/menu/admin                                                                        |Update menu by id                                     |      +     |      -     |    
 | delete                  |id                            |      DELETE     | /rest/menu/admin/{id}                                                                   |Delete menu by id                                     |      +     |      -     |
 | getBetweenForRestaurant |restaurantId,startDate,endDate|       GET       | /rest/menu/user/list?restaurantId={restaurantId}&startDate={startDate}&endDate={endDate}|Get a list of menus for a given period for restaurant |      +     |      +     |
 
-####3.5. Voting service
+#### 3.5. Voting service
+
 | Method name             |Parameters                    |Http request type| URL                                                                                   | Definition                                                                                      |Admin rights|User rights |
 | :-----------            | :----------:                 |:----------:     | :----------                                                                           | :-----------                                                                                    |:--------:  |:---------: |
 | get                     |id                            |       GET       | /rest/voting/user/{id}                                                                |Get voting by id                                                                                 |      +     |      +     |       
@@ -75,8 +80,9 @@ Anonymous users can register by /profile/register URL
 | getVotingResult         |startDate,endDate             |       GET       | /rest/voting/user/res?startDate={startDate}&endDate={endDate}                         |Get a voting results for a given period for every restaurant                                     |      +     |      +     |
 
 
-###4.Typical scenarios
-####4.1. Voting of user
+### 4.Typical scenarios
+#### 4.1. Voting of user
+
 | Service    |Method                         |Definition                                                             |CURL request
 | :----------| :----------                   |----------:                                                            | :---------- 
 | Menu       |getBetween                     |User receives information about the current menu of each restaurant    |`curl -s "http://localhost:8080/graduation/rest/menu/filter?startDate=2019-07-24&endDate=2019-08-25" --user user@yandex.ru:password`|
@@ -86,14 +92,16 @@ Anonymous users can register by /profile/register URL
 | Voting     |getBetweenForCurrentUser       |User receives voting data                                              |`curl -s "http://localhost:8080/graduation/rest/voting/user/filter?startDate=2019-07-24&endDate=2019-08-25" --user user@yandex.ru:password`|
 | Voting     |update                         |User votes for another restaurant                                      |`curl -s -X PUT -d '{"restaurantId":100004}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/graduation/rest/voting/user/100003/100047 --user user@yandex.ru:password`|
 | Voting     |getBetweenForCurrentUser       |User receives voting data                                              |`curl -s "http://localhost:8080/graduation/rest/voting/user/filter?startDate=2019-07-24&endDate=2019-08-25" --user user@yandex.ru:password`|
-####4.2. Get voting results
+
+#### 4.2. Get voting results
+
 | Service    |Method                         |Definition                                                             |CURL request
 | :----------| :----------                   |----------:                                                            | :---------- 
 | Voting     |getVotingResult                |User receives voting result for a period    |`curl -s "http://localhost:8080/graduation/rest/voting/user/res?startDate=2019-08-01&endDate=2019-08-25" --user user@yandex.ru:password`|
 
 
 
-###5. Curl samples for each service method(application deployed in application context `graduation`).
+### 5. Curl samples for each service method(application deployed in application context `graduation`).
 > For windows use `Git Bash`
 
 #### get All Users
