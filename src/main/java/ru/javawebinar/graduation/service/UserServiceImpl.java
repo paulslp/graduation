@@ -1,6 +1,7 @@
 package ru.javawebinar.graduation.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,12 +40,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void delete(int id) throws NotFoundException {
-        checkNotFoundWithId(repository.delete(id), id);
+        checkNotFoundWithId(repository.delete(id) != 0, id);
     }
 
     @Override
     public User get(int id) throws NotFoundException {
-        return checkNotFoundWithId(repository.get(id), id);
+        return checkNotFoundWithId(repository.findById(id).orElse(null), id);
     }
 
     @Override
@@ -55,7 +56,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public List<User> getAll() {
-        return repository.getAll();
+        return repository.findAll(new Sort(Sort.Direction.ASC, "name", "email"));
     }
 
     @Override

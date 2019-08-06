@@ -10,7 +10,6 @@ import ru.javawebinar.graduation.util.exception.NotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 
-import static ru.javawebinar.graduation.util.ValidationUtil.checkNotFound;
 import static ru.javawebinar.graduation.util.ValidationUtil.checkNotFoundWithId;
 
 @Service("menuService")
@@ -32,7 +31,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public void delete(int id) throws NotFoundException {
-        checkNotFoundWithId(repository.delete(id), id);
+        checkNotFoundWithId(repository.delete(id) != 0, id);
     }
 
     @Override

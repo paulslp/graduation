@@ -1,6 +1,7 @@
 package ru.javawebinar.graduation.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.javawebinar.graduation.model.Meal;
@@ -30,12 +31,12 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public void delete(int id) throws NotFoundException {
-        checkNotFoundWithId(repository.delete(id), id);
+        checkNotFoundWithId(repository.delete(id) != 0, id);
     }
 
     @Override
     public Meal get(int id) throws NotFoundException {
-        return checkNotFoundWithId(repository.get(id), id);
+        return checkNotFoundWithId(repository.findById(id).orElse(null), id);
     }
 
     @Override
@@ -46,7 +47,7 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public List<Meal> getAll() {
-        return repository.getAll();
+        return repository.findAll(new Sort(Sort.Direction.ASC, "name"));
     }
 
     @Override
