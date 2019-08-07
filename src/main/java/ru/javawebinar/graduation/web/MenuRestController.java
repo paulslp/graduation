@@ -21,7 +21,7 @@ import static ru.javawebinar.graduation.util.ValidationUtil.assureIdConsistent;
 @RestController
 @RequestMapping(MenuRestController.REST_URL)
 public class MenuRestController {
-    static final String REST_URL = "/rest/menu";
+    static final String REST_URL = "/rest";
 
     @Autowired
     private final MenuService service;
@@ -31,7 +31,7 @@ public class MenuRestController {
     }
 
 
-    @PostMapping(value = "/admin", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/admin/menu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Menu> createWithLocation(@Valid @RequestBody Menu menu) {
         Menu created = service.create(menu);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -40,33 +40,33 @@ public class MenuRestController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @PutMapping(value = "/admin/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/admin/menu/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody Menu menu, @PathVariable("id") int id) {
         assureIdConsistent(menu, id);
         service.update(menu);
     }
 
-    @DeleteMapping(value = "/admin/{id}")
+    @DeleteMapping(value = "/admin/menu/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") int id) {
         service.delete(id);
     }
 
-    @GetMapping(value = "/admin/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/admin/menu/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Menu get(@PathVariable("id") int id) {
         return service.get(id);
     }
 
 
-    @GetMapping(value = "/filter")
+    @GetMapping(value = "user/menu/filter")
     public List<Menu> getBetween(@RequestParam(value = "startDate", required = false) LocalDate startDate,
                                  @RequestParam(value = "endDate", required = false) LocalDate endDate) {
         return service.getBetween(orElse(startDate, DateTimeUtil.MIN_DATE), orElse(endDate, DateTimeUtil.MAX_DATE));
     }
 
-    @GetMapping(value = "/filterRestaurant")
-    public List<Menu> getBetweenForRestaurant(@RequestParam(value = "restaurantId") int restaurantId,
+    @GetMapping(value = "user/menu/filter/{restaurantId}")
+    public List<Menu> getBetweenForRestaurant(@PathVariable("restaurantId") int restaurantId,
                                               @RequestParam(value = "startDate", required = false) LocalDate startDate,
                                               @RequestParam(value = "endDate", required = false) LocalDate endDate) {
         return service.getBetweenForRestaurant(restaurantId, orElse(startDate, DateTimeUtil.MIN_DATE), orElse(endDate, DateTimeUtil.MAX_DATE));

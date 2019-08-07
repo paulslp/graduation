@@ -21,7 +21,7 @@ import static ru.javawebinar.graduation.util.ValidationUtil.checkNew;
 @RestController
 @RequestMapping(UserRestController.REST_URL)
 public class UserRestController {
-    static final String REST_URL = "/rest/admin/users";
+    static final String REST_URL = "/rest/admin/user";
 
     @Autowired
     private UserService service;
@@ -64,7 +64,7 @@ public class UserRestController {
         service.update(user);
     }
 
-    @GetMapping(value = "/by", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)
     public User getByMail(@RequestParam("email") String email) {
         return service.getByEmail(email);
     }

@@ -24,7 +24,7 @@ import static ru.javawebinar.graduation.util.ValidationUtil.assureIdConsistent;
 @RestController
 @RequestMapping(RestaurantRestController.REST_URL)
 public class RestaurantRestController {
-    static final String REST_URL = "/rest/restaurants";
+    static final String REST_URL = "/rest";
 
     @Autowired
     private final RestaurantService service;
@@ -34,17 +34,17 @@ public class RestaurantRestController {
     }
 
 
-    @GetMapping(value = "/admin", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/admin/restaurant", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Restaurant> getAll() {
         return service.getAll();
     }
 
-    @GetMapping(value = "/admin/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/admin/restaurant/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Restaurant get(@PathVariable("id") int id) {
         return service.get(id);
     }
 
-    @PostMapping(value = "/admin", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/admin/restaurant", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> createWithLocation(@Valid @RequestBody Restaurant restaurant) {
         Restaurant created = service.create(restaurant);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -53,25 +53,25 @@ public class RestaurantRestController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @DeleteMapping(value = "/admin/{id}")
+    @DeleteMapping(value = "/admin/restaurant/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") int id) {
         service.delete(id);
     }
 
-    @PutMapping(value = "/admin/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/admin/restaurant/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable("id") int id) {
         assureIdConsistent(restaurant, id);
         service.update(restaurant);
     }
 
-    @GetMapping(value = "/admin/by", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/admin/restaurant/filter", produces = MediaType.APPLICATION_JSON_VALUE)
     public Restaurant getByName(@RequestParam("name") String name) {
         return service.getByName(name);
     }
 
-    @GetMapping(value = "/user/list", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/user/restaurant/filter", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Restaurant> getRestaurantListWithMenuOnDate(@RequestParam(value = "startDate") LocalDate startDate,
                                                             @RequestParam(value = "endDate") LocalDate endDate) {
         return service.getRestaurantListWithMenuOnDate(startDate, endDate);

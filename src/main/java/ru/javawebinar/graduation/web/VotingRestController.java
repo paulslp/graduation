@@ -22,7 +22,7 @@ import static ru.javawebinar.graduation.util.ValidationUtil.assureIdConsistent;
 @RestController
 @RequestMapping(VotingRestController.REST_URL)
 public class VotingRestController {
-    static final String REST_URL = "/rest/voting";
+    static final String REST_URL = "/rest";
 
     @Autowired
     private final VotingService service;
@@ -31,18 +31,18 @@ public class VotingRestController {
         this.service = service;
     }
 
-    @GetMapping(value = "/user/filter")
+    @GetMapping(value = "/user/voting/filter")
     public List<Voting> getBetweenForCurrentUser(@RequestParam(value = "startDate") LocalDate startDate,
                                                  @RequestParam(value = "endDate") LocalDate endDate) {
         return service.getBetweenForUser(SecurityUtil.authUserId(), startDate, endDate);
     }
 
-    @GetMapping(value = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/user/voting/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Voting get(@PathVariable("id") int id) {
         return service.get(id, SecurityUtil.authUserId());
     }
 
-    @PostMapping(value = "/user/{restaurantId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/user/voting/{restaurantId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Voting> createWithLocation(@PathVariable("restaurantId") int restaurantId) {
         int userId = SecurityUtil.authUserId();
         VotingTo votingTo = new VotingTo(LocalDate.now(), restaurantId);
@@ -53,7 +53,7 @@ public class VotingRestController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @PutMapping(value = "/user/{restaurantId}/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/user/voting/{restaurantId}/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Voting> update(@PathVariable("restaurantId") int restaurantId, @PathVariable("id") int id) {
         int userId = SecurityUtil.authUserId();
         VotingTo votingTo = new VotingTo(LocalDate.now(), restaurantId);
@@ -65,13 +65,13 @@ public class VotingRestController {
         return ResponseEntity.created(uriOfNewResource).body(updated);
     }
 
-    @DeleteMapping(value = "/user")
+    @DeleteMapping(value = "/user/voting")
     public void deleteFromUser() {
         int userId = SecurityUtil.authUserId();
         service.deleteFromUser(userId);
     }
 
-    @DeleteMapping(value = "/admin/{id}")
+    @DeleteMapping(value = "/admin/voting/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") int id) {
         int userId = SecurityUtil.authUserId();
@@ -79,21 +79,21 @@ public class VotingRestController {
     }
 
 
-    @GetMapping(value = "/user/res", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/user/voting/result", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<VotingResult> getVotingResult(@RequestParam(value = "startDate", required = false) LocalDate startDate,
                                               @RequestParam(value = "endDate", required = false) LocalDate endDate) {
         return service.getVotingResult(orElse(startDate, DateTimeUtil.MIN_DATE), orElse(endDate, DateTimeUtil.MAX_DATE));
     }
 
-    @GetMapping(value = "/admin/filter")
+    @GetMapping(value = "/admin/voting/filter")
     public List<Voting> getBetween(
                 @RequestParam(value = "startDate", required = false) LocalDate startDate,
                 @RequestParam(value = "endDate", required = false) LocalDate endDate) {
         return service.getBetween(orElse(startDate, DateTimeUtil.MIN_DATE), orElse(endDate, DateTimeUtil.MAX_DATE));
     }
 
-    @GetMapping(value = "/admin/filterUser")
-    public List<Voting> getBetweenForUser(@RequestParam(value = "userId") int userId,
+    @GetMapping(value = "/admin/voting/filter/{userId}")
+    public List<Voting> getBetweenForUser(@PathVariable("userId") int userId,
                                           @RequestParam(value = "startDate", required = false) LocalDate startDate,
                                           @RequestParam(value = "endDate", required = false) LocalDate endDate) {
         return service.getBetweenForUser(userId, orElse(startDate, DateTimeUtil.MIN_DATE), orElse(endDate, DateTimeUtil.MAX_DATE));

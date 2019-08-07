@@ -18,7 +18,7 @@ import static ru.javawebinar.graduation.util.ValidationUtil.assureIdConsistent;
 @RestController
 @RequestMapping(MealRestController.REST_URL)
 public class MealRestController {
-    static final String REST_URL = "/rest/admin/meals";
+    static final String REST_URL = "/rest/admin/meal";
 
     @Autowired
     private final MealService service;
@@ -60,7 +60,7 @@ public class MealRestController {
         service.update(meal);
     }
 
-    @GetMapping(value = "/by", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)
     public Meal getByName(@RequestParam("name") String name) {
         return service.getByName(name);
     }
